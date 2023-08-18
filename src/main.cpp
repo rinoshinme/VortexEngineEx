@@ -1,3 +1,16 @@
+#if 1
+#include "engine.h"
+
+
+int main()
+{
+    vortex::Engine engine;
+
+    engine.Run();
+}
+
+#else
+
 #include <stdio.h>
 #include <assert.h>
 #include <GL/glew.h>
@@ -311,7 +324,7 @@ int main()
 
 
         // do event handling
-         if (glfwGetKey(window, GLFW_KEY_A)) {
+        if (glfwGetKey(window, GLFW_KEY_A)) {
             // cam_pos[0] -= cam_speed * elapsed_seconds;
             camera.Translate(-cam_speed * elapsed_seconds, 0.0, 0.0);
         }
@@ -358,3 +371,4 @@ int main()
     glfwTerminate();
     return 0;
 }
+#endif

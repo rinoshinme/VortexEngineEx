@@ -16,6 +16,6 @@ namespace vortex
         bool LoadFromFile(const std::string& filePath);
 
         const float* DataPtr() const;
-        uint32_t NumVertices() const { return m_Vertices.size(); }
+        uint32_t NumVertices() const { return uint32_t(m_Vertices.size()); }
     };
 }

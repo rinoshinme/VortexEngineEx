@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace vortex
 {
@@ -55,5 +56,6 @@ namespace vortex
         {
             return glm::ortho(m_Xmin, m_Xmax, m_Ymin, m_Ymax, m_Zmin, m_Zmax);
         }
+
     };
 }

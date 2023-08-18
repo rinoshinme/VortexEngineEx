@@ -30,7 +30,7 @@ namespace vortex
         AudioPlayer() {}
         bool IsPlayingMusic() { return true; }
         bool IsPlayingSfx() { return true; }
-        void Play(const Audio& audio) {}
+        void Play(const std::string& audio) {}
     };
 
     class AudioManager
