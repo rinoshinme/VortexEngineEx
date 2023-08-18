@@ -41,6 +41,8 @@ namespace vortex
         void Update() const;
         std::pair<int, int> WindowDimension() const;
 
+        void CaptureScreen(const std::string& filePath);
+
     public:
         // callbacks
     };

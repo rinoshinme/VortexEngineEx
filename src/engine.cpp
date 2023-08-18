@@ -21,7 +21,7 @@ namespace vortex
 
         // initialize resources
         m_Mesh = std::make_shared<Mesh>();
-        m_Mesh->LoadFromFile("F:/VortexLibs/VortexEngine/resources/objs/monkey2.obj");
+        m_Mesh->LoadFromFile("F:/VortexLibs/VortexEngine/resources/objs/monkey.obj");
         const float* vertex_data = m_Mesh->DataPtr();
 
         GLuint vbo;
@@ -50,7 +50,19 @@ namespace vortex
             }
         };
         m_Shader = vortex::Shader::FromSources(sources);
-        m_Texture = vortex::Texture2D::FromFile(vortex::GetResourcePath("/textures/skulluvmap.png"));
+        m_Texture = vortex::Texture2D::FromFile(vortex::GetResourcePath("textures/ao.png"));
+
+        std::vector<std::string> cubemapTexturePaths = {
+            vortex::GetResourcePath("textures/cubemap/negz.jpg"),
+            vortex::GetResourcePath("textures/cubemap/posz.jpg"),
+            vortex::GetResourcePath("textures/cubemap/posy.jpg"),
+            vortex::GetResourcePath("textures/cubemap/negy.jpg"),
+            vortex::GetResourcePath("textures/cubemap/negx.jpg"),
+            vortex::GetResourcePath("textures/cubemap/posx.jpg"),
+        };
+        std::string cubemapVertexShader = vortex::GetResourcePath("shaders/skybox.vs");
+        std::string cubemapFragmentShader = vortex::GetResourcePath("shaders/skybox.fs");
+        m_SkyBox = std::make_shared<SkyBox>(cubemapTexturePaths, 0, cubemapVertexShader, cubemapFragmentShader);
 
         glClearColor(0.3f, 0.5f, 0.1f, 1.0f);
         glEnable(GL_DEPTH_TEST);
@@ -61,16 +73,26 @@ namespace vortex
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        /* update view matrix */
-        m_Shader->Bind();
+        // update window dimension for viewport.
+        std::pair<int, int> size = m_Window->WindowDimension();
+        m_Frustum->SetWindowSize(size.first, size.second);
+
         glm::mat4 view = m_Camera->GetViewMatrix();
-       
+        glm::mat4 view1 = m_Camera->GetViewMatrixOrigin();
         glm::mat4 proj = m_Frustum->GetProjectionMatrix();
+        glm::mat4 model(1.0f);
+
+        m_SkyBox->Draw(view1, proj);
+
+        m_Shader->Bind();
         m_Shader->SetUniformMatrix4("view", &view[0][0]);
         m_Shader->SetUniformMatrix4("proj", &proj[0][0]);
-        glBindVertexArray(m_VAO);
-        glm::mat4 model(1.0f);
         m_Shader->SetUniformMatrix4("model", &model[0][0]);
+        
+        m_Texture->Bind(0);
+        m_Shader->SetUniformInt("basic_texture", 0);
+
+        glBindVertexArray(m_VAO);
         glDrawArrays(GL_TRIANGLES, 0, m_Mesh->NumVertices());
 
         m_Window->Update();
@@ -129,9 +151,8 @@ namespace vortex
         // window cleared each frame, so this should be placed at the bottom
         if (glfwGetKey(window, GLFW_KEY_P))
         {
-            // capture_screen("screen.png");
+            m_Window->CaptureScreen("screen.png");
         }
-        
     }
 
 }

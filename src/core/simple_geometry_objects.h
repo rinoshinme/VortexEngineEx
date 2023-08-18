@@ -15,7 +15,13 @@ namespace vortex
 
     struct AABB
     {
-        
+        glm::vec3 minCoords;
+        glm::vec3 maxCoords;
+
+        AABB(float xmin, float xmax, float ymin, float ymax, float zmin, float zmax)
+        {
+            // 
+        }
     };
     
 }

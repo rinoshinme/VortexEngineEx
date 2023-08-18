@@ -29,6 +29,12 @@ namespace vortex
         return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
     }
 
+    glm::mat4 Camera::GetViewMatrixOrigin() const
+    {
+        glm::vec3 pos(0.0f, 0.0f, 0.0f);
+        return glm::lookAt(pos, pos + m_Front, m_Up);
+    }
+
     void Camera::UpdateVectors()
     {
         glm::vec3 front;

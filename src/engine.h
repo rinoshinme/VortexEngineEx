@@ -7,6 +7,7 @@
 #include "utils/timer.h"
 #include "graphics/api.h"
 #include "graphics/mesh.h"
+#include "graphics/skybox.h"
 
 namespace vortex
 {
@@ -19,11 +20,12 @@ namespace vortex
         std::shared_ptr<Frustum> m_Frustum;
         std::shared_ptr<FpsCounter> m_FpsCounter;
 
-
         GLuint m_VAO;
         std::shared_ptr<Mesh> m_Mesh;
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture2D> m_Texture;
+
+        std::shared_ptr<SkyBox> m_SkyBox;
 
     public:
         Engine();

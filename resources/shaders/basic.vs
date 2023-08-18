@@ -6,8 +6,7 @@ layout (location = 2) in vec3 vertex_normal;
 
 out vec3 normal;
 out vec3 pos_eye;
-
-uniform float time;
+out vec2 uv;
 
 uniform mat4 model;
 uniform mat4 view;
@@ -19,5 +18,5 @@ void main()
     gl_Position = proj * view * model * vec4(vertex_position, 1.0);
     normal = vertex_normal;
     pos_eye = vertex_position;
-    // pos_eye.z += sin(time);
+    uv = texture_coord;
 }

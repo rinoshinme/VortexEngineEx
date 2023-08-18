@@ -22,6 +22,7 @@ namespace vortex
         Camera();
         Camera(const glm::vec3& pos, const glm::vec3& up, float yaw, float pitch);
         glm::mat4 GetViewMatrix() const;
+        glm::mat4 GetViewMatrixOrigin() const;
 
         void Zoom(float dz);
         void Translate(float dx, float dy, float dz);

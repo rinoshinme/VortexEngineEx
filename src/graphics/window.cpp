@@ -1,4 +1,5 @@
 #include "window.h"
+#include "stb_image_write.h"
 
 namespace vortex
 {
@@ -86,5 +87,17 @@ namespace vortex
     {
         glfwPollEvents();
         glfwSwapBuffers(m_Window);
+    }
+
+    void Window::CaptureScreen(const std::string& filePath)
+    {
+        uint32_t buffer_size = m_Width * m_Height * 3;
+        unsigned char* buffer = new unsigned char[buffer_size];
+        glReadPixels(0, 0, m_Width, m_Height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+        int stride = 3 * m_Width;
+        unsigned char* last_line = buffer + (m_Height - 1) * stride;
+        // from bottom to top
+        stbi_write_png(filePath.c_str(), m_Width, m_Height, 3, last_line, -stride);
+        delete[] buffer;
     }
 }
