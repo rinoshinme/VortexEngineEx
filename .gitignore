@@ -1,0 +1,9 @@
+.vs/
+build/
+.vscode/
+__pycache__/
+
+*.epub
+*.pdf
+*.obj
+*.png
